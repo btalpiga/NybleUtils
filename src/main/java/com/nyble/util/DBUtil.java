@@ -122,7 +122,13 @@ public class DBUtil {
             }else{
                 dataSourcesProperties.put(props.get("DS_NAME"), props);
                 ComboPooledDataSource ds = new ComboPooledDataSource();
-                ds.setJdbcUrl(props.get("JDBC_URL"));
+                String jdbcUrl = props.get("JDBC_URL");
+                if(props.containsKey("CONNECTION_NAME")) {
+                    jdbcUrl+= "?ApplicationName="+props.get("CONNECTION_NAME");
+                } else{
+                    jdbcUrl+= "?ApplicationName="+props.get("DS_NAME");
+                }
+                ds.setJdbcUrl(jdbcUrl);
                 ds.setUser(props.get("USERNAME"));
                 ds.setPassword(props.get("PASSWORD"));
                 dataSources.compute(props.get("DS_NAME"), (key, val)->{
