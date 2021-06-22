@@ -131,6 +131,7 @@ public class DBUtil {
                 ds.setJdbcUrl(jdbcUrl);
                 ds.setUser(props.get("USERNAME"));
                 ds.setPassword(props.get("PASSWORD"));
+                ds.setPreferredTestQuery("SELECT 1");
                 dataSources.compute(props.get("DS_NAME"), (key, val)->{
                     if(val!=null){
                         val.close();
